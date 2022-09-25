@@ -27,7 +27,7 @@ securityContext: {}
   # runAsUser: 1000
 
 credentials:
-  username: "codeuser"
+  authenabled: "true"
   password: "codepassword"
 
 service:
