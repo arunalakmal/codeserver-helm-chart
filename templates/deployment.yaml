@@ -33,18 +33,15 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: CODER_ENABLE_AUTH
+              value: {{ .Values.credentials.authenabled }}
+            - name: CODER_PASSWORD
+              value: {{ .Values.credentials.password }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           volumeMounts:
             - mountPath: /home/coder/certs
               name: {{ include "codeserver-helm-chart.fullname" . }}-certs
